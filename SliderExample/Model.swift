@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - Movie
 struct Movie: Codable {
 
     let page: Int?
@@ -65,99 +64,3 @@ enum MediaType: String, Codable {
     case movie = "movie"
     case tv = "tv"
 }
-
-/*
-class movieAPI: ObservableObject{
-    
-    @Published var movies: [Movie] = []
-    @Published var extractedMovies: [Result] = []
-
-    let apiKey = "bb062ca1a1471913abf6b680168fc5ca"
-
-   /*
-    func getMovies(onCompletion: @escaping ([Result]) -> ()){
-        
-        guard let url = URL(string: "https://api.themoviedb.org/3/trending/all/day?api_key=\(apiKey)") else{
-            return
-        }
-        
-        let dataTask = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            
-            guard let data = data, error == nil else {
-                return
-            }
-             
-            do {
-                let results = try JSONDecoder().decode(Movie.self, from: data)
-                
-                /*
-                for result in results.results ?? [] {
-                    DispatchQueue.main.async {
-                        self?.extractedMovies.append(result)
-                        print("extracted \(self?.extractedMovies)")
-                    }
-                }
-                */
-                
-                
-                results.results?.forEach{ response in
-                    DispatchQueue.main.async {
-                        self?.extractedMovies.append(response)
-                    }
-                    
-                }
-                print("extracted \(self?.extractedMovies)")
-                
-                onCompletion(self?.extractedMovies ?? [])
-            }
-            catch {
-                print("Couldn't decode movie json \(error.localizedDescription)")
-            }
-        }
-        dataTask.resume()
-        }
-    
-    */
-    func getMovies(onCompletion: @escaping ([Result]) -> ()){
-        
-        let url = URL(string: "https://api.themoviedb.org/3/trending/all/day?api_key=\(apiKey)")!
-        
-        var request = URLRequest(url: url)
-        
-        request.httpMethod = "GET"
-        
-        let session = URLSession.shared
-        
-        let dataTask = session.dataTask(with: request, completionHandler: { (data1, response1, error1) -> Void in
-            
-            guard let data = data1 else {
-                return
-            }
-            
-            do {
-                let results = try JSONDecoder().decode(Movie.self, from: data)
-                
-                for result in results.results ?? [] {
-                    print(result.originalName)
-                }
-                
-                DispatchQueue.main.async {
-                    let tmp = results.results
-                    print("movie model \(tmp)")
-                    self.extractedMovies = tmp ?? []
-                }
-                
-                onCompletion(self.extractedMovies)
-                
-            } catch {
-                print("Couldn't decode movie json \(error.localizedDescription)")
-            }
-            
-        })
-        
-        dataTask.resume()
-        
-    }
-   
-}
-*/

@@ -52,8 +52,6 @@ class MainViewModel: ObservableObject{
         
     }
     
-    
-    
 }
 
 struct MainView: View {
@@ -61,7 +59,7 @@ struct MainView: View {
     
     @State var shouldShowDetailsPage = false
     
-    let descriptionText = "This shows a list of the top 20 trending movies for the day. All data is brought in by themoviedb. You can view the details by clicking on either the image or `See more`."
+    let descriptionText = "This shows a list of the top 20 trending movies for the day. All data is brought in by themoviedb. You can view the details by clicking the item."
     
     
     var body: some View {
@@ -102,15 +100,17 @@ struct MainView: View {
                                                 if vm.extractedMovies[num].originalName != nil{
                                                     Text("\(vm.extractedMovies[num].originalName  ?? "No Title Found")")
                                                         .font(.title)
-                                                        .minimumScaleFactor(0.5)
+                                                        .minimumScaleFactor(0.3)
                                                         .multilineTextAlignment(.leading)
                                                         .lineLimit(2)
                                                 }
                                                 else{
                                                     Text("\(vm.extractedMovies[num].originalTitle  ?? "No Title Found")")
-                                                        .font(.title)
+                                                        .font(.title2)
                                                         .multilineTextAlignment(.leading)
-                                                    
+                                                        .lineLimit(2)
+                                                        .minimumScaleFactor(0.3)
+
                                                 }
                                                 Spacer()
                                             }
@@ -129,6 +129,7 @@ struct MainView: View {
                                         .lineLimit(nil)
                                         .foregroundColor(.white)
                                         .padding(5)
+                                        .minimumScaleFactor(0.8)
                                         .multilineTextAlignment(.leading)
                                         
                                     }
